@@ -12,6 +12,7 @@ public class CodeGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         _encoded = new Texture2D(800, 500);
         _generatedColorData = new Color32[256 * 256];
 
@@ -26,6 +27,8 @@ public class CodeGenerator : MonoBehaviour
                 Margin = 10,
             },
         };
+
+
     }
 
     void Generate(string data)
