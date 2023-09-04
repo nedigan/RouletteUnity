@@ -34,6 +34,7 @@ public class RouletteGame : MonoBehaviour
         if (RoundInPlay)
             return;
 
+
         RoundInPlay = true;
         _animator.SetBool("ExpandIn", RoundInPlay);
         _rolledNumber.SetAsLastSibling();
@@ -50,8 +51,8 @@ public class RouletteGame : MonoBehaviour
             _num = Random.Range(0, 37);
 
             // Rigged mode
-            //if (i == 9)
-            //    _num = 20;
+            if (i == 9)
+                _num = 7;
 
             _numberText.text = _num.ToString();
             Bet bet = _placeBet.NumToBet(_num);
