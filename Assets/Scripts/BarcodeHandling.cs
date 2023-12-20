@@ -17,7 +17,7 @@ public class BarcodeHandling : MonoBehaviour
         if (!_textInput.isFocused)
             _textInput.ActivateInputField();
 
-        if ((_textInput.text.Contains('\n') || _textInput.text.Contains('\r')) && !_hasReadCode)
+        if ((_textInput.text.Contains("\n") || _textInput.text.Contains("\r")) && !_hasReadCode)
         {
             _textInput.MoveTextStart(true);
             ReadCode();

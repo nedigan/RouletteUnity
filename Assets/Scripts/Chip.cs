@@ -25,7 +25,7 @@ public class Chip : MonoBehaviour
         else if (Value < 50)
             _chipImage.sprite = _chipImages[(int)BetMultiples.TwentyFive];
         else
-            _chipImage.sprite = _chipImages[(int)BetMultiples.Fifty];
+            _chipImage.sprite = _chipImages[(int)BetMultiples.Fifty];//
 
         return Value;
     }
