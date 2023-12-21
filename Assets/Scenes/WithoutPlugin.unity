@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.79069674, g: 0.7346746, b: 0.6093534, a: 1}
+  m_IndirectSpecularColor: {r: 0.66380185, g: 0.52206117, b: 1.2163767, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6912,7 +6912,7 @@ GameObject:
   - component: {fileID: 751397716}
   - component: {fileID: 751397715}
   m_Layer: 5
-  m_Name: RolledNumber
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6958,7 +6958,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0
+  m_text: NO MORE BETS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5da48f09037770b40bfcd32dd617d541, type: 2}
   m_sharedMaterial: {fileID: 6398913564790580892, guid: 5da48f09037770b40bfcd32dd617d541, type: 2}
@@ -6985,8 +6985,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 200
-  m_fontSizeBase: 200
+  m_fontSize: 72
+  m_fontSizeBase: 72
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7183,10 +7183,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _placeBet: {fileID: 2020441483}
-  _rolledNumber: {fileID: 921844127}
-  _animator: {fileID: 921844130}
+  _noMoreBetsDisplay: {fileID: 921844127}
+  _displayAnimator: {fileID: 921844130}
   _wheelAnimator: {fileID: 352827769}
-  LastWinner: {fileID: 0}
   RoundInPlay: 0
   _offsetRotation: {fileID: 1622379225}
 --- !u!1 &807226058
@@ -7273,10 +7272,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2020441483}
-        m_TargetAssemblyTypeName: PlaceBet, Assembly-CSharp
-        m_MethodName: ClearChipsAndBets
-        m_Mode: 6
+      - m_Target: {fileID: 795803215}
+        m_TargetAssemblyTypeName: RouletteGame, Assembly-CSharp
+        m_MethodName: ClearBets
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -8062,7 +8061,7 @@ GameObject:
   - component: {fileID: 921844128}
   - component: {fileID: 921844130}
   m_Layer: 5
-  m_Name: RolledNumber
+  m_Name: NoMoreBets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -6,11 +6,10 @@ using TMPro;
 public class RouletteGame : MonoBehaviour
 {
     [SerializeField] private PlaceBet _placeBet;
-    [SerializeField] private Transform _rolledNumber;
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Transform _noMoreBetsDisplay;
+    [SerializeField] private Animator _displayAnimator;
     [SerializeField] private Animator _wheelAnimator;
-    private TextMeshProUGUI _numberText;
-    public Bet LastWinner;
+    private Bet LastWinner;
     public bool RoundInPlay = false;
 
     [SerializeField] private Transform _offsetRotation;
@@ -27,11 +26,6 @@ public class RouletteGame : MonoBehaviour
 
     private int _num = 0;
 
-    private void Awake()
-    {
-        _numberText = _rolledNumber.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-    }
-
     private void Update()
     {
         //if (_animator.GetBool("EndRound"))
@@ -47,7 +41,8 @@ public class RouletteGame : MonoBehaviour
             return;
 
         RoundInPlay = true;
-        //_rolledNumber.SetAsLastSibling();
+
+        _noMoreBetsDisplay.SetAsLastSibling();
 
         StartCoroutine(SpinBall());
     }
@@ -60,7 +55,10 @@ public class RouletteGame : MonoBehaviour
         // Rigged mode
         //_num = 2;
 
-        // Play animation
+        // Display "no more bets"
+        _displayAnimator.SetBool("ExpandIn", true);
+
+        // Play spinning animation
         _offsetRotation.localRotation = Quaternion.Euler(0, 0, numberOffsets[_num]);
         _wheelAnimator.SetBool("spinning", true);
 
@@ -68,23 +66,30 @@ public class RouletteGame : MonoBehaviour
         yield return new WaitUntil(() => {
             return !_wheelAnimator.GetBool("spinning"); });
 
-        // Calculate winnings
-        LastWinner = _placeBet.CalculateWinnings(_num);
-
-        // If you made money last bet and have enough money, keep the same bets on the board
-        if (_placeBet.Credit > _placeBet.LastBetAmount)
-            _placeBet.Credit -= _placeBet.LastBetAmount;
-        else
-            _placeBet.ClearChipsAndBets(true); // Otherwise clear all bets 
-
         EndRound();
     }
 
     // Is called from round behaviour script when the fade out animation has completed
     public void EndRound()
     {
-        RoundInPlay = false;
+        _displayAnimator.SetBool("ExpandIn", false);
 
-        // Add other behaviour maybe?
+        // Calculate winnings
+        LastWinner = _placeBet.CalculateWinnings(_num);
+
+        // have enough money, keep the same bets on the board
+        if (_placeBet.Credit > _placeBet.LastBetAmount)
+            _placeBet.Credit -= _placeBet.LastBetAmount;
+        else
+            _placeBet.ClearChipsAndBets(false); // Otherwise clear all bets 
+
+        RoundInPlay = false;
+    }
+
+    public void ClearBets()
+    {
+        // Make sure round isnt in play
+        if (!RoundInPlay && _placeBet != null)
+            _placeBet.ClearChipsAndBets(true);
     }
 }

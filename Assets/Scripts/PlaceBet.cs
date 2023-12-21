@@ -123,14 +123,14 @@ public class PlaceBet : MonoBehaviour
     /// <summary>
     /// Clears chips and bets from the board.
     /// </summary>
-    /// <param name="loss">
+    /// <param name="refund">
     /// Whether or not to refund the player.
     /// </param>
-    public void ClearChipsAndBets(bool loss)
+    public void ClearChipsAndBets(bool refund)
     {
         foreach (Chip chip in _chips.Values)
         {
-            if (!loss)
+            if (refund)
                 Credit += chip.Value;
 
             Destroy(chip.gameObject);
