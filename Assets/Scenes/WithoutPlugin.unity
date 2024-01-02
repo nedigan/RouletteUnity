@@ -8825,7 +8825,7 @@ GameObject:
   - component: {fileID: 1150735482}
   - component: {fileID: 1150735481}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: BettingCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11663,7 +11663,7 @@ Camera:
     height: 1
   near clip plane: 0.2
   far clip plane: 1000
-  field of view: 40
+  field of view: 49
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -11688,14 +11688,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610694405}
-  m_LocalRotation: {x: 0.4334141, y: 0.20015016, z: -0.13268067, w: 0.86861277}
-  m_LocalPosition: {x: 21.864, y: 2.716, z: 65.368}
+  m_LocalRotation: {x: -0.14953956, y: -0.80087817, z: 0.22378206, w: -0.53493345}
+  m_LocalPosition: {x: 21.37, y: 2.014, z: 66.687}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 53.712, y: 23.152, z: -5.527}
+  m_LocalEulerAnglesHint: {x: 31.227, y: 112.521, z: 0.007}
 --- !u!4 &1622379225 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4668537573090195863, guid: 0b541a0f0a86d4c4b8322dd077130088, type: 3}
@@ -13491,6 +13491,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _textInput: {fileID: 1828049151}
   _placeBet: {fileID: 2020441483}
+  _db: {fileID: 780436883}
+  _reqResult: 
 --- !u!1 &1841116563
 GameObject:
   m_ObjectHideFlags: 0

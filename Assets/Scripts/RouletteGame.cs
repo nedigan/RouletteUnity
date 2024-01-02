@@ -62,7 +62,7 @@ public class RouletteGame : MonoBehaviour
         _offsetRotation.localRotation = Quaternion.Euler(0, 0, numberOffsets[_num]);
         _wheelAnimator.SetBool("spinning", true);
 
-        // Wait for animation to finish
+        // Wait for animation to finish - spinning parameter is set to false in animation behaviour script.
         yield return new WaitUntil(() => {
             return !_wheelAnimator.GetBool("spinning"); });
 
