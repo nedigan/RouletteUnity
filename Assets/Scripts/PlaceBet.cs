@@ -13,6 +13,7 @@ public enum BetMultiples
     TwentyFive,
     Fifty
 }
+
 public class PlaceBet : MonoBehaviour
 {
     private float _credit = 50f;
@@ -23,7 +24,7 @@ public class PlaceBet : MonoBehaviour
     }
     public float LastBetAmount {  get; private set; }
 
-    [SerializeField] private List<Bet> _bets;
+    public Bet[] BetCollection;
 
     private float[] _betMultiples = new float[] { 1f, 5f, 10f, 25f, 50f };
     private Dictionary<Vector3, Chip> _chips = new Dictionary<Vector3, Chip>();   
@@ -108,7 +109,7 @@ public class PlaceBet : MonoBehaviour
     /// <returns></returns>
     public Bet NumToBet(int number)
     {
-        foreach (Bet bet in _bets)
+        foreach (Bet bet in BetCollection)
         {
             if (bet.gameObject.name == number.ToString())
             {
@@ -137,7 +138,7 @@ public class PlaceBet : MonoBehaviour
         }
         _chips.Clear();
 
-        foreach (Bet bet in _bets)
+        foreach (Bet bet in BetCollection)
         {
             bet.MoneyPlaced = 0f;
         }

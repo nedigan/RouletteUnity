@@ -7064,6 +7064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd42038e8494984458d6296b00a4e406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _placeBet: {fileID: 2020441483}
 --- !u!4 &780436884
 Transform:
   m_ObjectHideFlags: 0
@@ -7077,7 +7078,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &795803210
 GameObject:
@@ -7093,7 +7094,7 @@ GameObject:
   - component: {fileID: 795803212}
   - component: {fileID: 795803215}
   m_Layer: 5
-  m_Name: Ready
+  m_Name: ConfirmBets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7167,6 +7168,18 @@ MonoBehaviour:
       - m_Target: {fileID: 795803215}
         m_TargetAssemblyTypeName: RouletteGame, Assembly-CSharp
         m_MethodName: StartRound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 780436883}
+        m_TargetAssemblyTypeName: Database, Assembly-CSharp
+        m_MethodName: ConfirmBets
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9073,7 +9086,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0b541a0f0a86d4c4b8322dd077130088, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 22.777029
+      value: 9.8
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0b541a0f0a86d4c4b8322dd077130088, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9081,7 +9094,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0b541a0f0a86d4c4b8322dd077130088, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 62.933075
+      value: 80.57
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0b541a0f0a86d4c4b8322dd077130088, type: 3}
       propertyPath: m_LocalRotation.w
@@ -9133,6 +9146,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b541a0f0a86d4c4b8322dd077130088, type: 3}
+--- !u!4 &1292308588 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0b541a0f0a86d4c4b8322dd077130088, type: 3}
+  m_PrefabInstance: {fileID: 1292308587}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1303671348
 GameObject:
   m_ObjectHideFlags: 0
@@ -11647,7 +11665,7 @@ Camera:
   m_GameObject: {fileID: 1610694405}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -11688,13 +11706,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1610694405}
-  m_LocalRotation: {x: -0.14953956, y: -0.80087817, z: 0.22378206, w: -0.53493345}
-  m_LocalPosition: {x: 21.37, y: 2.014, z: 66.687}
+  m_LocalRotation: {x: -0.31407183, y: -0.14676553, z: 0.04915422, w: -0.9366978}
+  m_LocalPosition: {x: -0.8304291, y: 2.1557298, z: 2.273468}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 1292308588}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 31.227, y: 112.521, z: 0.007}
 --- !u!4 &1622379225 stripped
 Transform:
@@ -13771,13 +13789,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852314158}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.01, y: 2.186595, z: 65.940155}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.23297119, y: 2.186595, z: 3.00708}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_Father: {fileID: 1292308588}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1873402342
 GameObject:
@@ -14564,7 +14582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb9012b72ecfa094985ba57035395e8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _bets:
+  BetCollection:
   - {fileID: 1739689796}
   - {fileID: 260525054}
   - {fileID: 669839585}
@@ -14679,7 +14697,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SPIN
+  m_text: PLACE BET
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5da48f09037770b40bfcd32dd617d541, type: 2}
   m_sharedMaterial: {fileID: 6398913564790580892, guid: 5da48f09037770b40bfcd32dd617d541, type: 2}
