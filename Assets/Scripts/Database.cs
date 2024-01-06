@@ -6,6 +6,8 @@ using UnityEngine.Networking;
 using System.Globalization;
 using System.IO;
 using System.Xml.Serialization;
+using UnityEngine.Windows;
+using Mono.CompilerServices.SymbolWriter;
 
 [Serializable]
 public class Ticket
@@ -37,6 +39,7 @@ public class Database : MonoBehaviour
     {
         _betCollection = _placeBet.BetCollection;
         //StartCoroutine(GetAllTickets());   
+        //CreateUniqueIDNumberPlate();
     }
 
     IEnumerator GetAllTickets()
@@ -79,7 +82,26 @@ public class Database : MonoBehaviour
             }
         }
     }
-    
+
+    public IEnumerator GetTicketCount(Action<int> callback)
+    {
+        using (UnityWebRequest req = UnityWebRequest.Get(_getURL + "?count"))
+        {
+            yield return req.SendWebRequest();
+
+            if (req.result == UnityWebRequest.Result.ConnectionError || req.responseCode == 400)
+            {
+                Debug.Log(req.error);
+            }
+            else
+            {
+                //Show results as collection
+                callback(Int32.Parse(req.downloadHandler.text));
+                   
+            }
+        }
+    }
+
     public IEnumerator PostTicket(Ticket ticket)
     {
         string postData = JsonUtility.ToJson(ticket);
@@ -118,14 +140,47 @@ public class Database : MonoBehaviour
 
         // Build ticket object
         Ticket ticket = new Ticket();
-        ticket.id = "BUY123"; // TODO: testing - implement later
-        ticket.bets = SerializeToXml(bets);
-        ticket.gamenum = 1; // TODO: testing - implement later
-        ticket.date = DateTime.Now.ToString("yyyy-MM-dd");
-        ticket.voucher = true; // TODO: testing - implement later
-        ticket.credit = 50;
+        CreateUniqueIDNumberPlate((ID) =>
+        {
+            ticket.id = ID;
+            ticket.bets = SerializeToXml(bets);
+            ticket.gamenum = 1; // TODO: testing - implement later
+            ticket.date = DateTime.Now.ToString("yyyy-MM-dd");
+            ticket.voucher = true; // TODO: testing - implement later
+            ticket.credit = 50;
+            StartCoroutine(PostTicket(ticket));
+        }); 
+    }
 
-        StartCoroutine(PostTicket(ticket));
+    public void CreateUniqueIDNumberPlate(Action<string> callback)
+    {
+        // AAA000 - start with this code
+        // ZZZ999 - end with this code
+        string ID = "";
+
+        StartCoroutine(GetTicketCount((num) =>
+        {
+            num++;
+            if (num < 0 || num > 175760999) // 26^3 * 999 + 26^2 * 999 + 26 * 999 + 999 = 175760999
+            {
+                throw new ArgumentOutOfRangeException("Input must be between 0 and 175760999");
+            }
+
+
+
+            int thousands = num / 1000;
+            char[] chars = new char[3];
+
+            chars[2] = (char)('A' + thousands % 26);
+            thousands /= 26;
+            chars[1] = (char)('A' + thousands % 26);
+            thousands /= 26;
+            chars[0] = (char)('A' + thousands % 26);
+
+            ID = $"{new string(chars)}{num % 1000:D3}";
+
+            callback(ID);
+        }));
     }
 
     public static string SerializeToXml<T>(T value)
