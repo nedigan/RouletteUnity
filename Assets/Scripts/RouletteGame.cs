@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System.Timers;
 
 public class RouletteGame : MonoBehaviour
 {
+    [Header("References")]
     [SerializeField] private PlaceBet _placeBet;
     [SerializeField] private Transform _noMoreBetsDisplay;
     [SerializeField] private Animator _displayAnimator;
     [SerializeField] private Animator _wheelAnimator;
-    private Bet LastWinner;
-    public bool RoundInPlay = false;
-
+    [SerializeField] private CountDown _countDown;
     [SerializeField] private Transform _offsetRotation;
 
+    [Header("Variables")]
+    public bool RoundInPlay = false;
+
     // Just stores all different offsets that relate to each number, definitely another way to do this, but fuk it
-    const float _spacing = 9.729f;
+    private const float _spacing = 9.729f;
     private Dictionary<int, float> numberOffsets = new Dictionary<int, float>() {
         { 0, 0f }, {26, _spacing}, {3, _spacing * 2}, {35, _spacing * 3}, {12, _spacing * 4}, {28, _spacing * 5}, {7, _spacing * 6}, {29, _spacing * 7},
         {18, _spacing * 8 }, {22, _spacing * 9}, {9, _spacing * 10}, {31, _spacing * 11}, {14, _spacing * 12}, {20, _spacing * 13}, {1, _spacing * 14}, {33, _spacing * 15},
@@ -23,16 +26,13 @@ public class RouletteGame : MonoBehaviour
         {36, _spacing * 24 }, {13, _spacing * 25}, {27, _spacing * 26}, {6, _spacing * 27}, {34, _spacing * 28}, {17, _spacing * 29}, {25, _spacing * 30}, {2, _spacing * 31},
         {21, _spacing * 32}, {4, _spacing * 33}, {19, _spacing * 34}, {15, _spacing * 35}, {32, _spacing * 36}
     };
-
+    private Bet LastWinner;
     private int _num = 0;
 
-    private void Update()
+    private void Start()
     {
-        //if (_animator.GetBool("EndRound"))
-        //{
-        //    EndRound();
-        //    _animator.SetBool("EndRound", false);
-        //}
+        // Subscribe to countdown
+        _countDown.onTimeIsUp.AddListener(StartRound);
     }
     public void StartRound()
     {
@@ -42,6 +42,7 @@ public class RouletteGame : MonoBehaviour
 
         RoundInPlay = true;
 
+        // Put infront of everything
         _noMoreBetsDisplay.SetAsLastSibling();
 
         StartCoroutine(SpinBall());
@@ -83,7 +84,11 @@ public class RouletteGame : MonoBehaviour
         else
             _placeBet.ClearChipsAndBets(false); // Otherwise clear all bets 
 
+        // Round no longer in play
         RoundInPlay = false;
+
+        // Start countdown again
+        _countDown.ResetTimer(90); // 90 seconds
     }
 
     public void ClearBets()
