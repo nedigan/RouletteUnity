@@ -25,7 +25,7 @@ public class CountDown : MonoBehaviour
             if (TimeLeft > 0)
             {
                 TimeLeft -= Time.deltaTime;
-                _updateTimer(TimeLeft);
+                _updateTimerText(TimeLeft);
             }
             else
             {
@@ -37,7 +37,7 @@ public class CountDown : MonoBehaviour
         }
     }
 
-    private void _updateTimer(float currentTime)
+    private void _updateTimerText(float currentTime)
     {
         // Add 1 so it doesnt show below 0
         currentTime += 1;
@@ -51,7 +51,7 @@ public class CountDown : MonoBehaviour
     {
         // Reset and start countdown again
         TimeLeft = time;
-        _updateTimer(time);
+        _updateTimerText(time);
 
         TimerOn = true;
     }

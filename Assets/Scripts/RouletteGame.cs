@@ -13,9 +13,20 @@ public class RouletteGame : MonoBehaviour
     [SerializeField] private Animator _wheelAnimator;
     [SerializeField] private CountDown _countDown;
     [SerializeField] private Transform _offsetRotation;
+    [SerializeField] private TextMeshProUGUI _gameNumText;
+    [SerializeField] private Database _database;
 
     [Header("Variables")]
     public bool RoundInPlay = false;
+
+    private int _gameNum = 0;
+    public int GameNum { get { return _gameNum; } 
+        set 
+        {
+            _gameNum = value;
+            _gameNumText.text = $"Game: {_gameNum}";
+        } 
+    }
 
     // Just stores all different offsets that relate to each number, definitely another way to do this, but fuk it
     private const float _spacing = 9.729f;
@@ -33,6 +44,12 @@ public class RouletteGame : MonoBehaviour
     {
         // Subscribe to countdown
         _countDown.onTimeIsUp.AddListener(StartRound);
+
+        // Set game num to the amount of games, ensures that if crashes, game num will not go back to 0.
+        StartCoroutine(_database.GetGameNumCount((count) =>
+        {
+            GameNum = count + 1;
+        }));
     }
     public void StartRound()
     {
@@ -73,19 +90,26 @@ public class RouletteGame : MonoBehaviour
     // Is called from round behaviour script when the fade out animation has completed
     public void EndRound()
     {
+        // Adds game to database
+        _database.GameCompleted(_num, GameNum);
+
+        // Plays fade out animation
         _displayAnimator.SetBool("ExpandIn", false);
 
         // Calculate winnings
-        LastWinner = _placeBet.CalculateWinnings(_num);
-
-        // have enough money, keep the same bets on the board
-        if (_placeBet.Credit > _placeBet.LastBetAmount)
-            _placeBet.Credit -= _placeBet.LastBetAmount;
-        else
-            _placeBet.ClearChipsAndBets(false); // Otherwise clear all bets 
+       // LastWinner = _placeBet.CalculateWinnings(_num);
+       //
+       // // have enough money, keep the same bets on the board
+       // if (_placeBet.Credit > _placeBet.LastBetAmount)
+       //     _placeBet.Credit -= _placeBet.LastBetAmount;
+       // else
+       //     _placeBet.ClearChipsAndBets(false); // Otherwise clear all bets 
 
         // Round no longer in play
         RoundInPlay = false;
+
+        // Increment Game Number
+        GameNum++;
 
         // Start countdown again
         _countDown.ResetTimer(90); // 90 seconds
@@ -96,5 +120,12 @@ public class RouletteGame : MonoBehaviour
         // Make sure round isnt in play
         if (!RoundInPlay && _placeBet != null)
             _placeBet.ClearChipsAndBets(true);
+    }
+
+    public void ConfirmBets()
+    {
+        _database.ConfirmBets(GameNum, (int)_placeBet.Credit); 
+
+        // Show printing status or something
     }
 }

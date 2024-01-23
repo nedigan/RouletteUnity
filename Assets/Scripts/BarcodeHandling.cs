@@ -39,10 +39,32 @@ public class BarcodeHandling : MonoBehaviour
         // Temporary way of adding credit from the code - just grab last digit
         _hasReadCode = true;
 
+        //Testing
+        string code;
+        code = _textInput.text;
+        //code = "BUY123";
+
         // Get ticket
-        StartCoroutine(_db.GetTicketWithID(_textInput.text, (ticket) =>
+        StartCoroutine(_db.GetTicketWithID(code, (ticket) =>
         {
-            _placeBet.Credit += ticket.credit;
+            if (ticket.REDEEMED)
+            {
+                Debug.Log("TICKET ALREADY REDEEMED");
+                return;
+            }
+
+            if (ticket.VOUCHER)
+                _placeBet.Credit += ticket.CREDIT;
+            else
+            {
+                float[] bets = Database.DeserializeXml<float[]>(ticket.BETS);
+                StartCoroutine(_db.GetWinningNum(ticket.GAMENUM, (winingNum) =>
+                {
+                    _placeBet.Credit += bets[winingNum] * 36; // Add credit if is winner
+                })); // Callback hell???? Consider better way.
+            }
+
+            StartCoroutine(_db.RedeemTicket(code));
         }));
     }
 }

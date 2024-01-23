@@ -18,7 +18,7 @@ public class Print : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.P))
         {
             //PrintTest();
-            PrintTabVoucher(80f);
+            //PrintTabVoucher(80f);
         }
     }
 
@@ -71,7 +71,7 @@ public class Print : MonoBehaviour
         );
     }
 
-    void PrintTabVoucher(float credit)
+    public void PrintTabVoucher(string code, float credit)
     {
         var e = new EPSON();
         _printer.Write( // or, if using and immediate printer, use await printer.WriteAsync
@@ -81,12 +81,12 @@ public class Print : MonoBehaviour
             e.PrintLine(""),
             e.SetStyles(PrintStyle.DoubleHeight),
             e.RightAlign(),
-            e.PrintLine("VOUCHER               $50"),
+            e.PrintLine($"VOUCHER               ${credit}"),
             e.PrintLine(""),
             e.PrintLine(""),
             e.RightAlign(),
             e.SetStyles(PrintStyle.None),
-            e.PrintLine("ACCRUED TOTAL            $50"),
+            e.PrintLine($"ACCRUED TOTAL            ${credit}"),
             e.CenterAlign(),
             e.SetStyles(PrintStyle.Condensed),
             e.PrintLine("098 968 785 456 275 927"),
@@ -102,7 +102,23 @@ public class Print : MonoBehaviour
             e.SetBarcodeHeightInDots(60),
             e.SetBarWidth(BarWidth.Default),
             e.SetBarLabelPosition(BarLabelPrintPosition.None),
-            e.PrintBarcode(BarcodeType.CODE39, "POO123"),
+            e.PrintBarcode(BarcodeType.CODE39, code),
+            e.FullCutAfterFeed(5)
+          )
+        );
+    }
+
+    public void PrintTicket(string code, float[] bets)
+    {
+        var e = new EPSON();
+        _printer.Write( // or, if using and immediate printer, use await printer.WriteAsync
+          ByteSplicer.Combine(
+            e.CenterAlign(),
+            e.PrintImage(File.ReadAllBytes("C:/Users/nedma/OneDrive/Documents/UnityProjects/Roulette/Assets/Images/TAB-Wagering-Logo.png"), true),
+            e.PrintLine(""),
+            e.SetStyles(PrintStyle.DoubleHeight),
+            e.PrintLine(code),
+            e.PrintBarcode(BarcodeType.CODE39, code),
             e.FullCutAfterFeed(5)
           )
         );
